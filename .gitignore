@@ -1,0 +1,32 @@
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Python (entornos virtuales, bytecode y cachés)
+.venv/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node.js / Node-RED (dependencias, secretos de runtime, credenciales y backups)
+node_modules/
+npm-debug.log*
+nodered/.config.*.json
+nodered/.config.*.json.backup
+nodered/*.backup
+nodered/.flows.json.backup
+nodered/*_cred.json
+
+# Logs y archivos temporales / IDE
+*.log
+*.tmp
+*.swp
+.DS_Store
+.idea/
+.vscode/

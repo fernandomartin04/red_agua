@@ -72,6 +72,7 @@ flowchart TD
 ### Paso 1: Levantar la infraestructura base (Kafka KRaft + TimescaleDB)
 ```bash
 cd ~/Escritorio/sistemas_distribuidos/red_agua
+cp -n .env.example .env   # Ajusta tus credenciales en .env si es la primera vez
 docker compose up -d
 ```
 Verifica que los 3 brokers (`kafka1`, `kafka2`, `kafka3`), `kafka-ui` (`:8080`) y `timescaledb` (`:5432`) estén `healthy`:
@@ -99,6 +100,7 @@ pruebas/.venv/bin/python motor/simulador.py
 
 ### Paso 3: Levantar el Dashboard en vivo en Node-RED
 ```bash
+(cd nodered && npm install)
 node-red -p 1880 -u nodered nodered/flows.json
 ```
 * **Dashboard en vivo:** [http://localhost:1880/dashboard/vivo](http://localhost:1880/dashboard/vivo)
