@@ -1,0 +1,661 @@
+[
+    {
+        "id": "tab_red_agua",
+        "type": "tab",
+        "label": "Red de Agua - En Vivo",
+        "disabled": false,
+        "info": "Flujo Nivel 5 sin nodos function: Kafka -> change/switch -> Dashboard 2.0"
+    },
+    {
+        "id": "kafka_broker_red_agua",
+        "type": "oriolrius-kafka-broker",
+        "name": "Clúster Kafka KRaft",
+        "hosts": "localhost:9092,localhost:9094,localhost:9096",
+        "usesasl": false,
+        "usetls": false
+    },
+    {
+        "id": "ui_base_agua",
+        "type": "ui-base",
+        "name": "Red de Agua",
+        "path": "/dashboard",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "navigationStyle": "default"
+    },
+    {
+        "id": "ui_theme_agua",
+        "type": "ui-theme",
+        "name": "Tema Agua",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0284c7",
+            "bgPage": "#f1f5f9",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cbd5e1"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "6px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "ui_page_vivo",
+        "type": "ui-page",
+        "name": "Monitorización en Vivo",
+        "ui": "ui_base_agua",
+        "path": "/vivo",
+        "icon": "water",
+        "layout": "grid",
+        "theme": "ui_theme_agua",
+        "order": 1,
+        "visible": true,
+        "disabled": false
+    },
+    {
+        "id": "ui_group_graficas",
+        "type": "ui-group",
+        "name": "Evolución Temporal (5 Tramos)",
+        "page": "ui_page_vivo",
+        "width": 12,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "ui_group_medidores",
+        "type": "ui-group",
+        "name": "Caudal Actual por Tramo",
+        "page": "ui_page_vivo",
+        "width": 12,
+        "height": 1,
+        "order": 2,
+        "showTitle": true,
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "kafka_in_lecturas",
+        "type": "oriolrius-kafka-consumer",
+        "z": "tab_red_agua",
+        "name": "Kafka: lecturas",
+        "broker": "kafka_broker_red_agua",
+        "topic": "lecturas",
+        "groupid": "",
+        "fromOffset": "latest",
+        "outOfRangeOffset": "latest",
+        "encoding": "utf8",
+        "useSchemaValidation": false,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            [
+                "chg_prep_caudal",
+                "chg_prep_presion",
+                "sw_tramo"
+            ]
+        ]
+    },
+    {
+        "id": "chg_prep_caudal",
+        "type": "change",
+        "z": "tab_red_agua",
+        "name": "Serie = tramo, Valor = caudal_entrada",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.tramo",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.caudal_entrada",
+                "tot": "msg"
+            }
+        ],
+        "x": 450,
+        "y": 120,
+        "wires": [
+            [
+                "chart_caudal"
+            ]
+        ]
+    },
+    {
+        "id": "chart_caudal",
+        "type": "ui-chart",
+        "z": "tab_red_agua",
+        "group": "ui_group_graficas",
+        "name": "Gráfica Caudal",
+        "label": "Caudal de Entrada (m³/h)",
+        "order": 1,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "m³/h",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "25",
+        "ymax": "75",
+        "bins": "",
+        "action": "append",
+        "stackSeries": false,
+        "pointRadius": "",
+        "showLegend": true,
+        "removeOlder": "2",
+        "removeOlderUnit": "60",
+        "removeOlderPoints": "",
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 6,
+        "className": "",
+        "interpolation": "linear",
+        "x": 760,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "chg_prep_presion",
+        "type": "change",
+        "z": "tab_red_agua",
+        "name": "Serie = tramo, Valor = presion",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.tramo",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.presion",
+                "tot": "msg"
+            }
+        ],
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "chart_presion"
+            ]
+        ]
+    },
+    {
+        "id": "chart_presion",
+        "type": "ui-chart",
+        "z": "tab_red_agua",
+        "group": "ui_group_graficas",
+        "name": "Gráfica Presión",
+        "label": "Presión por Tramo (bar)",
+        "order": 2,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "yAxisLabel": "bar",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "2",
+        "ymax": "4",
+        "action": "append",
+        "showLegend": true,
+        "removeOlder": "2",
+        "removeOlderUnit": "60",
+        "removeOlderPoints": "",
+        "width": 6,
+        "height": 6,
+        "interpolation": "linear",
+        "x": 760,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "sw_tramo",
+        "type": "switch",
+        "z": "tab_red_agua",
+        "name": "Separar por Tramo",
+        "property": "payload.tramo",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "T1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "T2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "T3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "T4",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "T5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "chg_t1"
+            ],
+            [
+                "chg_t2"
+            ],
+            [
+                "chg_t3"
+            ],
+            [
+                "chg_t4"
+            ],
+            [
+                "chg_t5"
+            ]
+        ]
+    },
+    {
+        "id": "chg_t1",
+        "type": "change",
+        "z": "tab_red_agua",
+        "name": "T1 caudal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.caudal_entrada",
+                "tot": "msg"
+            }
+        ],
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "gauge_t1"
+            ]
+        ]
+    },
+    {
+        "id": "chg_t2",
+        "type": "change",
+        "z": "tab_red_agua",
+        "name": "T2 caudal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.caudal_entrada",
+                "tot": "msg"
+            }
+        ],
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [
+                "gauge_t2"
+            ]
+        ]
+    },
+    {
+        "id": "chg_t3",
+        "type": "change",
+        "z": "tab_red_agua",
+        "name": "T3 caudal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.caudal_entrada",
+                "tot": "msg"
+            }
+        ],
+        "x": 580,
+        "y": 360,
+        "wires": [
+            [
+                "gauge_t3"
+            ]
+        ]
+    },
+    {
+        "id": "chg_t4",
+        "type": "change",
+        "z": "tab_red_agua",
+        "name": "T4 caudal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.caudal_entrada",
+                "tot": "msg"
+            }
+        ],
+        "x": 580,
+        "y": 400,
+        "wires": [
+            [
+                "gauge_t4"
+            ]
+        ]
+    },
+    {
+        "id": "chg_t5",
+        "type": "change",
+        "z": "tab_red_agua",
+        "name": "T5 caudal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.caudal_entrada",
+                "tot": "msg"
+            }
+        ],
+        "x": 580,
+        "y": 440,
+        "wires": [
+            [
+                "gauge_t5"
+            ]
+        ]
+    },
+    {
+        "id": "gauge_t1",
+        "type": "ui-gauge",
+        "z": "tab_red_agua",
+        "name": "T1",
+        "group": "ui_group_medidores",
+        "order": 1,
+        "width": 2,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Tramo T1",
+        "units": "m³/h",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#0284c7",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "60",
+                "color": "#eab308",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "80",
+                "color": "#ef4444",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": 100,
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "x": 750,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "gauge_t2",
+        "type": "ui-gauge",
+        "z": "tab_red_agua",
+        "name": "T2",
+        "group": "ui_group_medidores",
+        "order": 2,
+        "width": 2,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Tramo T2",
+        "units": "m³/h",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#0284c7",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "60",
+                "color": "#eab308",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "80",
+                "color": "#ef4444",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": 100,
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "x": 750,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "gauge_t3",
+        "type": "ui-gauge",
+        "z": "tab_red_agua",
+        "name": "T3",
+        "group": "ui_group_medidores",
+        "order": 3,
+        "width": 2,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Tramo T3",
+        "units": "m³/h",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#0284c7",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "60",
+                "color": "#eab308",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "80",
+                "color": "#ef4444",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": 100,
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "x": 750,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "gauge_t4",
+        "type": "ui-gauge",
+        "z": "tab_red_agua",
+        "name": "T4",
+        "group": "ui_group_medidores",
+        "order": 4,
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Tramo T4",
+        "units": "m³/h",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#0284c7",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "60",
+                "color": "#eab308",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "80",
+                "color": "#ef4444",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": 100,
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "x": 750,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "gauge_t5",
+        "type": "ui-gauge",
+        "z": "tab_red_agua",
+        "name": "T5",
+        "group": "ui_group_medidores",
+        "order": 5,
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Tramo T5",
+        "units": "m³/h",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#0284c7",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "60",
+                "color": "#eab308",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "80",
+                "color": "#ef4444",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": 100,
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "x": 750,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    }
+]

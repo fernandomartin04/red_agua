@@ -1,0 +1,116 @@
+Grupo: prueba-c-2  (Ctrl+C para terminar y ver el resumen)
+[REBALANCEO] asignadas: [0, 1, 2, 3, 4, 5]
+%6|1795011908.118|FAIL|consumidor-prueba-982074#consumer-1| [thrd:localhost:9092/1]: localhost:9092/1: Disconnected: connection closed by peer: receive 0 after POLLIN (after 2136ms in state UP)
+%6|1795011908.119|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Disconnected: connection closed by peer: receive 0 after POLLIN (after 2274ms in state UP)
+%6|1795011908.120|FAIL|consumidor-prueba-982074#consumer-1| [thrd:localhost:9092/1]: localhost:9092/1: Disconnected: connection closed by peer: receive 0 after POLLIN (after 0ms in state APIVERSION_QUERY, 1 identical error(s) suppressed)
+%3|1795011908.472|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011908.496|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011908.510|FAIL|consumidor-prueba-982074#consumer-1| [thrd:localhost:9092/1]: localhost:9092/1: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011908.573|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT, 1 identical error(s) suppressed)
+%3|1795011909.497|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011909.974|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011909.999|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011910.474|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011910.474|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011910.976|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011911.001|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011911.477|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011911.501|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011911.978|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011912.003|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011912.478|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011912.478|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011912.980|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011912.980|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011913.482|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011913.507|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011913.985|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011914.009|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011914.487|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011914.513|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011914.988|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011915.015|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011915.489|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011915.489|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011915.990|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011916.017|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011916.491|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011916.492|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011916.992|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011916.992|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011917.493|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011917.493|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011917.995|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011917.995|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011918.495|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011918.495|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011919.496|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011919.521|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011919.997|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011919.997|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011920.497|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011920.497|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011921.000|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011921.001|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011921.501|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011921.502|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011922.003|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1795011922.004|FAIL|consumidor-prueba-982074#consumer-1| [thrd:GroupCoordinator]: GroupCoordinator: localhost:9092: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+recibidos=1016 duplicados=0
+recibidos=9782 duplicados=0
+recibidos=17629 duplicados=0
+recibidos=27545 duplicados=0
+recibidos=39349 duplicados=0
+recibidos=46121 duplicados=0
+recibidos=57853 duplicados=0
+recibidos=59435 duplicados=0
+[REBALANCEO] revocadas: [0, 1, 2, 3, 4, 5]
+
+===== RESUMEN CONSUMIDOR =====
+T1 boot=05fac060: 1200 únicos (seq 1..1200) huecos=0
+T1 boot=15430c8a: 1105 únicos (seq 1..1105) huecos=0
+T1 boot=217b8723: 489 únicos (seq 1..489) huecos=0
+T1 boot=3ba507ef: 1293 únicos (seq 1..1293) huecos=0
+T1 boot=4ef9ec08: 1200 únicos (seq 1..1200) huecos=0
+T1 boot=56c31cf2: 1200 únicos (seq 1..1200) huecos=0
+T1 boot=5a06bb1a: 3000 únicos (seq 1..3000) huecos=0
+T1 boot=a72126ca: 1200 únicos (seq 1..1200) huecos=0
+T1 boot=e7ea4243: 1200 únicos (seq 1..1200) huecos=0
+T2 boot=05fac060: 1200 únicos (seq 1..1200) huecos=0
+T2 boot=15430c8a: 1105 únicos (seq 1..1105) huecos=0
+T2 boot=217b8723: 489 únicos (seq 1..489) huecos=0
+T2 boot=3ba507ef: 1293 únicos (seq 1..1293) huecos=0
+T2 boot=4ef9ec08: 1200 únicos (seq 1..1200) huecos=0
+T2 boot=56c31cf2: 1200 únicos (seq 1..1200) huecos=0
+T2 boot=5a06bb1a: 3000 únicos (seq 1..3000) huecos=0
+T2 boot=a72126ca: 1200 únicos (seq 1..1200) huecos=0
+T2 boot=e7ea4243: 1200 únicos (seq 1..1200) huecos=0
+T3 boot=05fac060: 1200 únicos (seq 1..1200) huecos=0
+T3 boot=15430c8a: 1105 únicos (seq 1..1105) huecos=0
+T3 boot=217b8723: 489 únicos (seq 1..489) huecos=0
+T3 boot=3ba507ef: 1293 únicos (seq 1..1293) huecos=0
+T3 boot=4ef9ec08: 1200 únicos (seq 1..1200) huecos=0
+T3 boot=56c31cf2: 1200 únicos (seq 1..1200) huecos=0
+T3 boot=5a06bb1a: 3000 únicos (seq 1..3000) huecos=0
+T3 boot=a72126ca: 1200 únicos (seq 1..1200) huecos=0
+T3 boot=e7ea4243: 1200 únicos (seq 1..1200) huecos=0
+T4 boot=05fac060: 1200 únicos (seq 1..1200) huecos=0
+T4 boot=15430c8a: 1105 únicos (seq 1..1105) huecos=0
+T4 boot=217b8723: 489 únicos (seq 1..489) huecos=0
+T4 boot=3ba507ef: 1293 únicos (seq 1..1293) huecos=0
+T4 boot=4ef9ec08: 1200 únicos (seq 1..1200) huecos=0
+T4 boot=56c31cf2: 1200 únicos (seq 1..1200) huecos=0
+T4 boot=5a06bb1a: 3000 únicos (seq 1..3000) huecos=0
+T4 boot=a72126ca: 1200 únicos (seq 1..1200) huecos=0
+T4 boot=e7ea4243: 1200 únicos (seq 1..1200) huecos=0
+T5 boot=05fac060: 1200 únicos (seq 1..1200) huecos=0
+T5 boot=15430c8a: 1105 únicos (seq 1..1105) huecos=0
+T5 boot=217b8723: 489 únicos (seq 1..489) huecos=0
+T5 boot=3ba507ef: 1293 únicos (seq 1..1293) huecos=0
+T5 boot=4ef9ec08: 1200 únicos (seq 1..1200) huecos=0
+T5 boot=56c31cf2: 1200 únicos (seq 1..1200) huecos=0
+T5 boot=5a06bb1a: 3000 únicos (seq 1..3000) huecos=0
+T5 boot=a72126ca: 1200 únicos (seq 1..1200) huecos=0
+T5 boot=e7ea4243: 1200 únicos (seq 1..1200) huecos=0
+recibidos=59435 duplicados=0 huecos=0
+RESULTADO: OK, sin pérdidas

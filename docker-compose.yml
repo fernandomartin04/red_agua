@@ -1,0 +1,188 @@
+name: red-agua
+
+# ---------- Bloques comunes (anclas YAML para no repetir) ----------
+x-kafka-comun: &kafka-comun
+  image: apache/kafka:${KAFKA_VERSION}
+  restart: unless-stopped
+  networks: [ red_agua ]
+  healthcheck:
+    test: [ "CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:19092 > /dev/null 2>&1" ]
+    interval: 10s
+    timeout: 10s
+    retries: 12
+    start_period: 30s
+
+x-kafka-env: &kafka-env
+  CLUSTER_ID: ${KAFKA_CLUSTER_ID}
+  # Cada nodo es broker y controller a la vez (modo combinado)
+  KAFKA_PROCESS_ROLES: broker,controller
+  KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka1:9093,2@kafka2:9093,3@kafka3:9093
+  KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+  # 3 listeners: INTERNAL (red Docker), EXTERNAL (host), CONTROLLER (Raft)
+  KAFKA_LISTENERS: INTERNAL://:19092,EXTERNAL://:9092,CONTROLLER://:9093
+  KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+  KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+  KAFKA_LOG_DIRS: /var/lib/kafka/data
+  # Durabilidad (decidido en v5)
+  KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+  KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+  KAFKA_MIN_INSYNC_REPLICAS: 2
+  KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+  KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+  KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+  KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE: "false"
+  KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+  KAFKA_HEAP_OPTS: "-Xms512m -Xmx512m"
+
+services:
+  kafka1:
+    <<: *kafka-comun
+    container_name: kafka1
+    hostname: kafka1
+    ports: [ "9092:9092" ]
+    volumes: [ kafka1_datos:/var/lib/kafka/data ]
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: 1
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:19092,EXTERNAL://${KAFKA_HOST_EXTERNO}:9092
+
+  kafka2:
+    <<: *kafka-comun
+    container_name: kafka2
+    hostname: kafka2
+    ports: [ "9094:9092" ]
+    volumes: [ kafka2_datos:/var/lib/kafka/data ]
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: 2
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:19092,EXTERNAL://${KAFKA_HOST_EXTERNO}:9094
+
+  kafka3:
+    <<: *kafka-comun
+    container_name: kafka3
+    hostname: kafka3
+    ports: [ "9096:9092" ]
+    volumes: [ kafka3_datos:/var/lib/kafka/data ]
+    environment:
+      <<: *kafka-env
+      KAFKA_NODE_ID: 3
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:19092,EXTERNAL://${KAFKA_HOST_EXTERNO}:9096
+
+  # Crea los topics una vez y termina (se puede relanzar: --if-not-exists)
+  kafka-init:
+    image: apache/kafka:${KAFKA_VERSION}
+    container_name: kafka-init
+    networks: [ red_agua ]
+    restart: "no"
+    depends_on:
+      kafka1: { condition: service_healthy }
+      kafka2: { condition: service_healthy }
+      kafka3: { condition: service_healthy }
+    volumes: [ "./kafka/crear_topics.sh:/crear_topics.sh:ro" ]
+    entrypoint: [ "/bin/bash", "/crear_topics.sh" ]
+
+  kafka-ui:
+    image: kafbat/kafka-ui:${KAFKA_UI_VERSION}
+    container_name: kafka-ui
+    networks: [ red_agua ]
+    restart: unless-stopped
+    ports: [ "8080:8080" ]
+    depends_on:
+      kafka1: { condition: service_healthy }
+    environment:
+      KAFKA_CLUSTERS_0_NAME: red-agua
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:19092,kafka2:19092,kafka3:19092
+
+  timescaledb:
+    image: timescale/timescaledb:${TIMESCALE_VERSION}
+    container_name: timescaledb
+    restart: unless-stopped
+    networks: [ red_agua ]
+    ports: [ "${TIMESCALE_PORT}:5432" ]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - timescaledb_datos:/var/lib/postgresql/data
+      - ./timescale/init.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ---------- 5 Contenedores de tramo + Persistidor (perfil 'nodos') ----------
+  tramo1: &tramo-comun
+    build: ./motor
+    image: red-agua-motor:latest
+    container_name: tramo1
+    restart: unless-stopped
+    profiles: [ "nodos" ]
+    networks: [ red_agua ]
+    depends_on:
+      kafka1: { condition: service_healthy }
+    environment: &tramo-env
+      KAFKA_BOOTSTRAP: kafka1:19092,kafka2:19092,kafka3:19092
+      T0: ${T0}
+      TPS: ${TPS}
+      TRAMO: T1
+
+  tramo2:
+    <<: *tramo-comun
+    container_name: tramo2
+    environment:
+      <<: *tramo-env
+      TRAMO: T2
+
+  tramo3:
+    <<: *tramo-comun
+    container_name: tramo3
+    environment:
+      <<: *tramo-env
+      TRAMO: T3
+
+  tramo4:
+    <<: *tramo-comun
+    container_name: tramo4
+    environment:
+      <<: *tramo-env
+      TRAMO: T4
+
+  tramo5:
+    <<: *tramo-comun
+    container_name: tramo5
+    environment:
+      <<: *tramo-env
+      TRAMO: T5
+
+  persistor:
+    build: ./persistencia
+    image: red-agua-persistor:latest
+    container_name: persistor
+    restart: unless-stopped
+    profiles: [ "nodos" ]
+    networks: [ red_agua ]
+    depends_on:
+      kafka1: { condition: service_healthy }
+      timescaledb: { condition: service_healthy }
+    environment:
+      KAFKA_BOOTSTRAP: kafka1:19092,kafka2:19092,kafka3:19092
+      POSTGRES_HOST: timescaledb
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      T0: ${T0}
+      TPS: ${TPS}
+
+networks:
+  red_agua:
+    name: red_agua # nombre fijo: Node-RED, TimescaleDB, etc. se unirán a ella
+
+volumes:
+  kafka1_datos:
+  kafka2_datos:
+  kafka3_datos:
+  timescaledb_datos:
